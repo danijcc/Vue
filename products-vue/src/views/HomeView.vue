@@ -7,12 +7,16 @@
                 <tbody class="table-group-divider" id="contenido">
                     <tr v-for="food, i in foods" :key="food.id">
                         <td>{{food.id}}</td>
-                        <td>{{food.titlle}}</td>
+                        <td>{{food.title}}</td>
                         <td>{{food.created_at}}</td>
                         <td>{{food.updated_at}}</td>
-                       
                         <td>
-
+                            <router-link :to="{path:'edit/'+food.id}" class="btn btn-warning">
+                                <i class="fa-solid fa-edit"></i>
+                            </router-link>&nbsp;
+                            <button class="btn btn-danger">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
                         </td>
                     
                     </tr>
@@ -38,6 +42,9 @@
                         this.foods = response.data.data
                     )
                 );
+            },
+            eliminar(id,nombre){
+                
             }
         }
 
