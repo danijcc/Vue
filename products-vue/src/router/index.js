@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue';
 import CreateView from '../views/CreateView.vue';
 import EditView from '../views/EditView.vue';
 
+
 const routes = [
   {
     path: '/',
@@ -13,8 +14,7 @@ const routes = [
     path: '/create',
     name: 'create',
     component: CreateView
-  }
-  ,
+  },
   {
     path: '/edit:id',
     name: 'edit',

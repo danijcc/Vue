@@ -11,10 +11,10 @@
                         <td>{{food.created_at}}</td>
                         <td>{{food.updated_at}}</td>
                         <td>
-                            <router-link :to="{path:'edit/'+food.id}" class="btn btn-warning">
+                            <router-link :to="{path:'test/'+food.id}" class="btn btn-warning">
                                 <i class="fa-solid fa-edit"></i>
                             </router-link>&nbsp;
-                            <button class="btn btn-danger">
+                            <button class="btn btn-danger" v-on:click="eliminar(food.id,food.title)">
                                 <i class="fa-solid fa-trash"></i>
                             </button>
                         </td>
@@ -28,6 +28,9 @@
 </template>
 <script>
     import axios from "axios";
+    import {confirmar, show_alerta} from '../funciones';
+    import Swal from "sweetalert2";
+    
     export default{
         data(){
             return {foods:null}
@@ -43,7 +46,45 @@
                     )
                 );
             },
-            eliminar(id,nombre){
+            eliminar(id,title){
+                const swalWhitBootstrapButton= Swal.mixin({
+                    customClass:{
+                        confirmButton:'btn btn-success me-3',
+                        cancelButton:'btn btn-danger'
+                    },
+                    buttonsStyling:false
+                });
+
+                swalWhitBootstrapButton.fire({
+                    title: 'Seguro de eliminar el Item ' + title +" ?",
+                    text: 'Se perdera la informacion del producto',
+                    icon: 'question',
+                    showCancelButton:true,
+                    confirmButtonText:'<i class="fa-solid fa-check"></i> Si, eliminar',
+                    cancelButtonText:'<i class="fa-solid fa-ban"></i> Cancelar'
+                })
+                .then((ressult)=>{
+                    if(ressult.isConfirmed){
+                        axios.delete('http://127.0.0.1:8000/api/foods/'+id)
+                        .then( (response) => {
+                            let status = response.status;
+                            
+                            if([200, 201, 204].includes(status)){
+                                show_alerta('Se elimino correctamente', 'success');
+                                this.getFoods()
+
+                            }else{
+                                var listado='';
+                                var errores = respuesta.data.data[1]['errors'];
+                                Object.keys(errores).forEach(
+                                    key => listado += errores[key][0]+'.');
+                                    show_alerta(listado,'error');
+                            }
+                        })
+                    }else{
+                        show_alerta('Operacion cancelada','info');
+                    }
+                })
                 
             }
         }
