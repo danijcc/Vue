@@ -17,3 +17,45 @@
         </div>
     </div>
 </template>
+<script>
+    import {show_alerta,enviarSolicitud} from '../funciones';
+    import {useRoute} from 'vue-router'
+    import axios from 'axios';
+
+    export default{
+        data(){
+            return{
+                id:'0',
+                title:'',
+                url:'http://127.0.0.1:8000/api/foods'
+            }
+        },
+        mounted(){
+            const route = useRoute();
+            this.id = route.params.id;
+            this.getProduct();
+            this.url = this.url+'/'+this.id; 
+           
+        },
+        methods:{
+            getProduct(){
+                axios.get(this.url).then(
+                    response =>(
+                        this.title = response.data['title']
+                    )
+                );
+            },
+            guardar(){
+                event.preventDefault();
+                if(this.title.trim() === ''){
+                    show_alerta('Escribe el nombre','warning','nombre');
+                }
+                else{
+                    var parametros = {title:this.title.trim()}
+                    enviarSolicitud('PUT',parametros,this.url,'Comida actualizada');
+                }
+            }
+        }
+    }
+</script>
+

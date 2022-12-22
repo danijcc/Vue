@@ -8,7 +8,7 @@ export function show_alerta(mensaje,icono,foco=''){
     Swal.fire({
         title:mensaje,
         icon:icono,
-        custonClass: {confirmButton: 'btn btn-primary', popup: 'animated zoomIn'},
+        custonClass: {confirmButton: 'btn btn-titleprimary', popup: 'animated zoomIn'},
         buttonsStyling:false
     });
 }

@@ -11,7 +11,7 @@
                         <td>{{food.created_at}}</td>
                         <td>{{food.updated_at}}</td>
                         <td>
-                            <router-link :to="{path:'test/'+food.id}" class="btn btn-warning">
+                            <router-link :to="{path:'edit/'+food.id}" class="btn btn-warning">
                                 <i class="fa-solid fa-edit"></i>
                             </router-link>&nbsp;
                             <button class="btn btn-danger" v-on:click="eliminar(food.id,food.title)">
